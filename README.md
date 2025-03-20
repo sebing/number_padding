@@ -62,11 +62,12 @@ regex pattern matching.
 
 ## Improvements
 
-Use Project Lombok to remove boiler plate code
+- Use Project Lombok to remove boilerplate code
+- Choice between Code Duplication vs Readability(Individual implementation of test `NonRegexNumberPadderTest` is much more readable than `ParameterizedTest` test `NumberPadderTest`)
 
 ## Testing
 
-The project includes JUnit 5 tests located in the `src/test/java` directory. The test cases cover:
+The project includes JUnit-5 tests located in the `src/test/java` directory. The test cases cover:
 
 - Single-digit padding
 - Numbers that already meet required length
