@@ -3,6 +3,7 @@ package com.github.sebing.padding;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NonRegexNumberPadderTest {
     @Test
@@ -53,4 +54,11 @@ public class NonRegexNumberPadderTest {
         assertEquals("A", new NonRegexNumberPadder("A", 2).padNumbers());
         assertEquals("005", new NonRegexNumberPadder("5", 3).padNumbers());
     }
+
+    @Test
+    void testInvalidPaddingThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> new RegexNumberPadder(null, 2));
+        assertThrows(IllegalArgumentException.class, () -> new RegexNumberPadder("Hello", -1));
+    }
+
 }

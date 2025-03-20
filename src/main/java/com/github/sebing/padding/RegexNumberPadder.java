@@ -6,12 +6,18 @@ import java.util.regex.Pattern;
 public class RegexNumberPadder implements NumberPadder {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 
-    private final int X;
+    private final int paddingCountX;
     private final String input;
 
-    public RegexNumberPadder(final String input, final int X) {
+    public RegexNumberPadder(final String input, final int paddingCountX) {
+        if (input == null || input.trim().isEmpty()) {
+            throw new IllegalArgumentException("Input string cannot be null or empty");
+        }
+        if (paddingCountX <= 0) {
+            throw new IllegalArgumentException("Padding length must be greater than zero");
+        }
         this.input = input;
-        this.X = X;
+        this.paddingCountX = paddingCountX;
     }
 
 
@@ -23,7 +29,7 @@ public class RegexNumberPadder implements NumberPadder {
 
         while (matcher.find()) {
             final String number = matcher.group();
-            final String paddedNumber = String.format("%0" + X + "d", Integer.parseInt(number));
+            final String paddedNumber = String.format("%0" + paddingCountX + "d", Integer.parseInt(number));
             matcher.appendReplacement(result, paddedNumber);
         }
         matcher.appendTail(result);

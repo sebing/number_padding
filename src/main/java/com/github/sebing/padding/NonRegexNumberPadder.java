@@ -1,12 +1,18 @@
 package com.github.sebing.padding;
 
 public final class NonRegexNumberPadder implements NumberPadder {
-    private final int X;
+    private final int paddingCountX;
     private final String input;
 
-    public NonRegexNumberPadder(final String input, final int X) {
+    public NonRegexNumberPadder(final String input, final int paddingCountX) {
+        if (input == null || input.trim().isEmpty()) {
+            throw new IllegalArgumentException("Input string cannot be null  or empty");
+        }
+        if (paddingCountX <= 0) {
+            throw new IllegalArgumentException("Padding length must be greater than zero");
+        }
         this.input = input;
-        this.X = X;
+        this.paddingCountX = paddingCountX;
     }
 
     @Override
@@ -34,7 +40,7 @@ public final class NonRegexNumberPadder implements NumberPadder {
     }
 
     private String padNumber(final String number) {
-        return String.format("%0" + X + "d", Integer.parseInt(number));
+        return String.format("%0" + paddingCountX + "d", Integer.parseInt(number));
     }
 
     public static void main(final String[] args) {

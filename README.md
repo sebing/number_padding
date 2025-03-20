@@ -35,14 +35,8 @@ Unit tests are included to validate the correctness of both implementations.
 ## Usage
 
    ```java
-    new com.github.sebing.padding.NonRegexNumberPadder("James Bond 7",3).
-
-padNumbers();
-    new com.github.sebing.padding.
-
-RegexNumberPadder("James Bond 7",3).
-
-padNumbers();
+    new com.github.sebing.padding.NonRegexNumberPadder("James Bond 7",3).padNumbers();
+    new com.github.sebing.padding.RegexNumberPadder("James Bond 7",3).padNumbers();
    ```
 
 ## Time and Space Complexity Analysis
@@ -78,6 +72,7 @@ The project includes JUnit-5 tests located in the `src/test/java` directory. The
 - Strings without numbers
 - Large numbers
 - Single character strings
+- Invalid cases
 
 To run the tests:
 
