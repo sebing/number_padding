@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegexNumberPadder implements NumberPadder {
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+
     private final int X;
     private final String input;
 
@@ -20,18 +22,19 @@ public class RegexNumberPadder implements NumberPadder {
         System.out.println(new RegexNumberPadder("99UR1337", 6).padNumbers());         // "000099UR001337"
     }
 
+    @Override
     public String padNumbers() {
-        final Pattern pattern = Pattern.compile("\\b\\d+\\b"); // Match whole numbers
-        final Matcher matcher = pattern.matcher(input);
-        final StringBuilder result = new StringBuilder();
+        Matcher matcher = NUMBER_PATTERN.matcher(input);
+        StringBuffer result = new StringBuffer();
 
         while (matcher.find()) {
-            final String number = matcher.group();
-            final String paddedNumber = String.format("%0" + X + "d", Integer.parseInt(number));
+            String number = matcher.group();
+            String paddedNumber = String.format("%0" + X + "d", Integer.parseInt(number));
             matcher.appendReplacement(result, paddedNumber);
         }
         matcher.appendTail(result);
 
         return result.toString();
     }
+
 }

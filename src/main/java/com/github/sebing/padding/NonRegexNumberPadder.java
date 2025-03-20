@@ -17,6 +17,7 @@ public final class NonRegexNumberPadder implements NumberPadder {
         System.out.println(new NonRegexNumberPadder("99UR1337", 6).padNumbers());         // "000099UR001337"
     }
 
+    @Override
     public String padNumbers() {
         final StringBuilder result = new StringBuilder();
         final StringBuilder numberBuffer = new StringBuilder();
