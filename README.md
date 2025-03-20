@@ -56,6 +56,7 @@ regex pattern matching.
 
 ## Improvements
 
+- Add container configurations
 - Use Project Lombok to remove boilerplate code
 - Choice between Code Duplication vs Readability(Individual implementation of test `NonRegexNumberPadderTest` is much more readable than `ParameterizedTest` test `NumberPadderTest`)
 
