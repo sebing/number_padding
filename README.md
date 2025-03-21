@@ -3,12 +3,8 @@
 ## Overview
 
 This project provides a Java implementation to left-pad numbers found in a given string to a specified length using
-zeros. It includes two implementations:
+zeros. 
 
-- One using regular expressions (Regex)
-- One without regular expressions
-
-Unit tests are included to validate the correctness of both implementations.
 
 ## How to Run the Solution
 
@@ -24,8 +20,7 @@ Unit tests are included to validate the correctness of both implementations.
 3. Compile and run the program using the following Maven commands:
    ```sh
    mvn clean compile
-   mvn exec:java -Dexec.mainClass="com.github.sebing.padding.NonRegexNumberPadder"
-   mvn exec:java -Dexec.mainClass="com.github.sebing.padding.RegexNumberPadder"
+   mvn exec:java -Dexec.mainClass="com.github.sebing.padding.LeftNumberPadder"
    ```
 4. To run the tests, execute:
    ```sh
@@ -35,30 +30,69 @@ Unit tests are included to validate the correctness of both implementations.
 ## Usage
 
    ```java
-    new com.github.sebing.padding.NonRegexNumberPadder("James Bond 7",3).padNumbers();
-    new com.github.sebing.padding.RegexNumberPadder("James Bond 7",3).padNumbers();
+    new com.github.sebing.padding.LeftNumberPadder("James Bond 7",3).padNumbers();
    ```
 
 ## Time and Space Complexity Analysis
+###   **Time Complexity:**
 
-### Implementation Without Regex
+#### Key operations:
+- The solution iterates over the `input` string **once**, processing each character in sequence.
+- For each digit sequence (number), it:
+   - Builds a `StringBuilder` for the **integer part** (`O(k)` where `k` is the length of the number).
+   - Optionally builds another `StringBuilder` for the **fractional part** if it's a decimal (`O(m)` where `m` is the length of the fractional part).
+   - Pads the **integer part** using `String.format()` (constant time for small numbers; effectively `O(1)` for primitive integer sizes).
+- All other characters are processed in constant time `O(1)` per character.
 
-- **Time Complexity**: O(N) where N is the length of the input string. Each character is processed once.
-- **Space Complexity**: O(N) for storing the output string.
+#### Total work done:
+- Every character in the `input` string is visited exactly **once**.
+- The `StringBuilder` and `String.format()` operations per number are small relative to `n` (the input length).
 
-### Implementation With Regex
+  Therefore, the **time complexity** is:
+```
+O(n)
+```
+Where `n` is the length of the input string.
 
-- **Time Complexity**: O(N) on average, but can be higher due to regex processing.
-- **Space Complexity**: O(N) for the output string and possible overhead due to regex pattern matching.
+---
 
-The implementation without regex is generally more efficient, especially for large inputs, as it avoids the overhead of
-regex pattern matching.
+###   **Space Complexity:**
+
+#### Key allocations:
+- A `StringBuilder` (`result`) that stores the entire processed output → `O(n)`.
+- Temporary `StringBuilder` objects for numbers and fractions (reused during iteration).
+- No recursion or additional data structures.
+
+  So the **space complexity** is:
+```
+O(n)
+```
+Because:
+- The output is stored in memory.
+- The temporary buffers are small and proportional to the size of numbers, not the whole input.
+
+---
+
+###   External Libraries Impact:
+- **`StringBuilder`** is a standard Java utility. Its append operations are amortized `O(1)`.
+- **`String.format()`** is used for padding the number, but since we're dealing with **integers**, this operation is efficient and considered **constant time** (`O(1)`) relative to the number of digits (which is typically bounded).
+
+---
+
+###   Conclusion
+```
+Time Complexity:  O(n)
+Space Complexity: O(n)
+```
+
+Where `n` is the length of the input string.
+
+
 
 ## Improvements
 
 - Add container configurations
 - Use Project Lombok to remove boilerplate code
-- Choice between Code Duplication vs Readability(Individual implementation of test `NonRegexNumberPadderTest` is much more readable than `ParameterizedTest` test `NumberPadderTest`)
 
 ## Testing
 
@@ -74,6 +108,7 @@ The project includes JUnit-5 tests located in the `src/test/java` directory. The
 - Large numbers
 - Single character strings
 - Invalid cases
+- Whole number tests
 
 To run the tests:
 
